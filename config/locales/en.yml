@@ -1,5 +1,62 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
+#START:layout
+#START:main
+#START:cart
+#START:currency
+#START:checkout
+#START:flash
 en:
-  hello: "Hello world"
+
+#END:checkout
+#END:flash
+#END:main
+#END:layout
+  number:
+    currency:
+      format:
+        unit: "$"
+        precision: 2
+        separator: "."
+        delimiter: ","
+        format: "%u%n"
+#END:currency
+
+#START:layout
+  layout:
+#END:cart
+    title:       "Pragmatic Bookshelf"
+    side:
+      home:      "Home"
+      questions: "Questions"
+      news:      "News"
+      contact:   "Contact"
+#END:layout
+#START:cart
+    cart:
+      title:      "Your Cart"
+      button:
+        empty:    "Empty cart"
+        checkout: "Checkout"
+#END:cart
+
+#START:main
+  main:
+    title:       "Your Pragmatic Catalog"
+    button:
+      add:       "Add to Cart"
+#END:main
+
+#START:checkout
+  checkout:
+    legend:      "Please Enter your Details"
+    name:        "Name"
+    address:     "Address"
+    email:       "E-mail"
+    pay_type:    "Pay with"
+    pay_prompt:  "Select a payment method"
+    submit:      "Place Order"
+#END:checkout
+
+#START:flash
+  flash:
+    thanks:      "Thank you for your order"
+#END:flash

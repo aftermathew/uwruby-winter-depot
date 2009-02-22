@@ -1,7 +1,8 @@
-<div class="cart-title">Your Cart</div>
-<table>
-  <%= render(:partial => "cart_item", :collection => cart.items) %>
+<div class="cart-title"><%= I18n.t 'layout.cart.title' %></div>
 
+<table>
+  <%= render(:partial => "cart_item", :collection => cart.items) %>  
+  
   <tr class="total-line">
     <td colspan="2">Total</td>
     <td class="total-cell"><%= number_to_currency(cart.total_price)
@@ -9,6 +10,11 @@
   </tr>
 
 </table>
+  
 
-<%= button_to "Checkout", :action => 'checkout' %> 
-<%= button_to "Empty cart", :action => :empty_cart %>
+<%= button_to I18n.t('layout.cart.button.checkout'), :action =>
+'checkout' %>
+
+<%= button_to I18n.t('layout.cart.button.empty'), :action =>
+:empty_cart %>
+

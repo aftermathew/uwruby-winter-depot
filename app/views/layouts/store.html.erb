@@ -13,43 +13,60 @@
 <body id="store">
   <div id="banner">
 
+  <!-- START:i18n -->
+  <% form_tag '', :method => 'GET', :class => 'locale' do %>
+    <%= select_tag 'locale', options_for_select(LANGUAGES,
+  I18n.locale),
+      :onchange => 'this.form.submit()' %>
+    <%= submit_tag 'submit' %>
+    <%= javascript_tag "$$('.locale input').each(Element.hide)" %>
+  <% end %>
+  <!-- END:i18n -->
     <%= image_tag("logo.png") %>
-    <%= @page_title || "Pragmatic Bookshelf" %>
+<!-- START_HIGHLIGHT -->
+    <%= @page_title || I18n.t('layout.title') %>
+<!-- END_HIGHLIGHT -->
   </div>
+
   <div id="columns">
     <div id="side">
       <!-- START:hidden_div -->
-<!-- START_HIGHLIGHT -->
       <% if @cart %>
-<!-- END_HIGHLIGHT -->  
         <% hidden_div_if(@cart.items.empty?, :id => "cart") do %>
           <%= render(:partial => "cart", :object => @cart) %>
         <% end %>
-
-<!-- START_HIGHLIGHT -->
       <% end %>
-<!-- END_HIGHLIGHT -->
     <!-- END:hidden_div -->
 
-      <a href="http://www....">Home</a><br />
-      <a href="http://www..../faq">Questions</a><br />
-      <a href="http://www..../news">News</a><br />
-      <a href="http://www..../contact">Contact</a><br />
+<!-- START_HIGHLIGHT -->
+      <a href="http://www...."><%= I18n.t 'layout.side.home'
+      %></a><br />
 
-      <!-- START_HIGHLIGHT -->
+<!-- END_HIGHLIGHT -->
+<!-- START_HIGHLIGHT -->
+      <a href="http://www..../faq"><%= I18n.t 'layout.side.questions'
+      %></a><br />
+<!-- END_HIGHLIGHT -->
+<!-- START_HIGHLIGHT -->
+      <a href="http://www..../news"><%= I18n.t 'layout.side.news'
+      %></a><br />
+<!-- END_HIGHLIGHT -->
+<!-- START_HIGHLIGHT -->
+      <a href="http://www..../contact"><%= I18n.t 'layout.side.contact' %></a><br />
+<!-- END_HIGHLIGHT -->
       <% if session[:user_id] %>
         <br />
+
         <%= link_to 'Orders',   :controller => 'orders' %><br />
         <%= link_to 'Products', :controller => 'products' %><br />
         <%= link_to 'Users',    :controller => 'users'    %><br />
         <br />
-
         <%= link_to 'Logout', :controller => 'admin', :action =>
         'logout' %>
       <% end %>
-      <!-- END_HIGHLIGHT -->
     </div>
     <div id="main">
+
       <!-- START:flash -->
       <% if flash[:notice] -%>
         <div id="notice"><%= flash[:notice] %></div>
@@ -61,3 +78,4 @@
   </div>
 </body>
 </html>
+

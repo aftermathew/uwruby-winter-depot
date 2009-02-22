@@ -27,29 +27,20 @@ class OrderTest < ActiveSupport::TestCase
     test_validation_error 'pay_type', "is not included in the list"
   end
 
-  def make_an_order
-    order = Order.new(:name => 'mathew', :address => 'addymcdaddy',
-                      :email => 'email@email.email', :pay_type => 'check')
-
-    order.save
-    order
-  end
-
   test "line item added from cart" do
-    order = make_an_order
+    order = orders(:one)
     cart = Cart.new
-    cart.add_product Product.find(:all).first
+    cart.add_product products(:one)
     order.add_line_items_from_cart(cart)
 
     assert_equal(1,(LineItem.find_all_by_order_id order.id).size)
   end
 
   test "multiple line items added from cart" do
-    order = make_an_order
+    order = orders(:two)
     cart = Cart.new
-    products = Product.find(:all)
-    cart.add_product Product.find(:all).first
-    cart.add_product Product.find(:all).second
+    cart.add_product products(:one)
+    cart.add_product products(:two)
     order.add_line_items_from_cart(cart)
 
     assert_equal(2,(LineItem.find_all_by_order_id order.id).size)

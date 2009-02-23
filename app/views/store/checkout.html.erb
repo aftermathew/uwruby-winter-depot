@@ -4,16 +4,22 @@
   
   <% form_for :order, :url => { :action => :save_order } do |form| %>
     <fieldset>
-      <legend>Please Enter Your Details</legend>
+<!-- START_HIGHLIGHT -->
+      <legend><%= I18n.t 'checkout.legend' %></legend>
+<!-- END_HIGHLIGHT -->
 
       <div>
-        <%= form.label :name, "Name:" %>
+<!-- START_HIGHLIGHT -->
+        <%= form.label :name, I18n.t('checkout.name') + ":" %>
+<!-- END_HIGHLIGHT -->
+
         <%= form.text_field :name, :size => 40 %>
       </div>
 
       <div>
-
-        <%= form.label :address, "Address:" %>
+<!-- START_HIGHLIGHT -->
+        <%= form.label :address, I18n.t('checkout.address') + ":" %>
+<!-- END_HIGHLIGHT -->
         <%= form.text_area :address, :rows => 3, :cols => 40 %>
       </div>
 
@@ -23,16 +29,22 @@
       </div>
 
       <div>
-        <%= form.label :pay_type, "Pay with:" %>
+<!-- START_HIGHLIGHT -->
+        <%= form.label :pay_type, I18n.t('checkout.pay_type') + ":" %>
+<!-- END_HIGHLIGHT -->
         <%=
           form.select :pay_type,
                        Order::PAYMENT_TYPES, 
-                      :prompt => "Select a payment method"
+# START_HIGHLIGHT
+                      :prompt => I18n.t('checkout.pay_prompt')
+# END_HIGHLIGHT
         %>
       </div>
-
     
-      <%= submit_tag "Place Order", :class => "submit" %>
+<!-- START_HIGHLIGHT -->
+      <%= submit_tag I18n.t('checkout.submit'), :class => "submit" %>
+<!-- END_HIGHLIGHT -->
     </fieldset>
+
   <% end %>  
 </div>

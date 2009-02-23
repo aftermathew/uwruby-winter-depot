@@ -46,4 +46,46 @@ class StoreControllerTest < ActionController::TestCase
     assert flash[:notice]
   end
 
+  def localization_test_template
+    locales = LANGUAGES.to_a.map{ |locale|
+      locale.last
+    }
+    locales.each { |locale|
+      translations = YAML.load_file("#{LOCALES_DIRECTORY}#{locale}.yml")
+      yield(locale, translations)
+    }
+  end
+
+  test "store controller index is localized" do
+    localization_test_template { |locale, translations|
+      @request.session[:user_id] = users(:one).id
+      get :index, :locale => locale
+
+      assert_match translations[locale]['layout']['side']['questions'], @response.body
+      assert_match translations[locale]['layout']['title'], @response.body
+      assert_match translations[locale]['main']['title'], @response.body
+    }
+  end
+
+  test "cart is localize" do
+    post :add_to_cart, :id => products(:one).id
+
+    localization_test_template { |locale, translations|
+      @request.session[:user_id] = users(:one).id
+      get :index, :locale => locale
+      assert_match translations[locale]['layout']['cart']['button']['empty'], @response.body
+    }
+  end
+
+  test "checkout is localized" do
+    post :add_to_cart, :id => products(:one).id
+
+    localization_test_template { |locale, translations|
+      @request.session[:user_id] = users(:one).id
+      post :checkout, :locale => locale
+      assert_match translations[locale]['checkout']['address'], @response.body
+      assert_match translations[locale]['checkout']['legend'], @response.body
+    }
+  end
 end
+
